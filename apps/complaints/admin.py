@@ -1,3 +1,13 @@
-from django.contrib import admin
+from django.contrib.gis import admin
+from .models import (
+    Profile,
+    Complaint
+)
 
-# Register your models here.
+
+class ComplaintAdmin(admin.GeoModelAdmin):
+    model = Complaint
+
+
+admin.site.register(Complaint, ComplaintAdmin)
+admin.site.register(Profile)
