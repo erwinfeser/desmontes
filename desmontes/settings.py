@@ -116,6 +116,7 @@ USE_TZ = True
 
 # Update database configuration with $DATABASE_URL.
 db_from_env = dj_database_url.config(
+    engine='django.contrib.gis.db.backends.postgis',
     conn_max_age=500
 )
 DATABASES['default'].update(db_from_env)
