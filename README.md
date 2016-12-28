@@ -1,7 +1,4 @@
-venv
-staticfiles
-.env
-*.pyc
-.idea
-__pycache__
-.DS_Store
+DESMONTES
+--
+
+Código fuente del sitio desmontes.org
