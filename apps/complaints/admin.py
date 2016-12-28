@@ -9,5 +9,9 @@ class ComplaintAdmin(admin.GeoModelAdmin):
     model = Complaint
 
 
+class ProfileAdmin(admin.ModelAdmin):
+    model = Profile
+
+
 admin.site.register(Complaint, ComplaintAdmin)
-admin.site.register(Profile)
+admin.site.register(Profile, ProfileAdmin)
