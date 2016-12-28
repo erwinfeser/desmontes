@@ -23,6 +23,9 @@ class ComplaintAdmin(admin.GeoModelAdmin):
         'profile__user__last_name',
         'profile__user__email'
     ]
+    raw_id_fields = [
+        'profile'
+    ]
 
 
 class ProfileAdmin(admin.ModelAdmin):
@@ -34,6 +37,9 @@ class ProfileAdmin(admin.ModelAdmin):
         'user__first_name',
         'user__last_name',
         'user__email'
+    ]
+    raw_id_fields = [
+        'user'
     ]
 
 
