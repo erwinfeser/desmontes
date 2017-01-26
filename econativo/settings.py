@@ -1,5 +1,5 @@
 """
-Django settings for desmontes project on Heroku. For more info, see:
+Django settings for econativo project on Heroku. For more info, see:
 https://github.com/heroku/heroku-django-template
 
 For more information on this file, see
@@ -57,7 +57,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'desmontes.urls'
+ROOT_URLCONF = 'econativo.urls'
 
 TEMPLATES = [
     {
@@ -76,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'desmontes.wsgi.application'
+WSGI_APPLICATION = 'econativo.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
@@ -84,9 +84,9 @@ WSGI_APPLICATION = 'desmontes.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'desmontes',
-        'USER': 'desmontes',
-        'PASSWORD': 'desmontes',
+        'NAME': 'econativo',
+        'USER': 'econativo',
+        'PASSWORD': 'econativo',
         'HOST': '',
         'PORT': '5432'
     }

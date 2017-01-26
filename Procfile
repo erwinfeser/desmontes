@@ -1,1 +1,1 @@
-web: gunicorn desmontes.wsgi
+web: gunicorn econativo.wsgi
