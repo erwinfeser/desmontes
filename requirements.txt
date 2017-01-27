@@ -6,3 +6,4 @@ whitenoise==3.2
 djangorestframework==3.5.3
 django-filter==1.0.1
 djangorestframework-gis==0.11
+django-raster==0.3.1
