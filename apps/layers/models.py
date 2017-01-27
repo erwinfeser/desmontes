@@ -1,7 +1,6 @@
 from django.contrib.gis.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import Polygon, Point, GEOSException
-from django.conf import settings
 
 
 class AbstractCreatedUpdated(models.Model):
@@ -12,15 +11,8 @@ class AbstractCreatedUpdated(models.Model):
         abstract = True
 
 
-class Profile(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='profile')
-
-    def __str__(self):
-        return self.user.email
-
-
 class Layer(AbstractCreatedUpdated):
-    profile = models.ForeignKey('Profile', related_name='layers')
+    profile = models.ForeignKey('profiles.Profile', related_name='layers')
     title = models.CharField(max_length=140)
     description = models.TextField(null=True, blank=True)
     area = models.GeometryField(
