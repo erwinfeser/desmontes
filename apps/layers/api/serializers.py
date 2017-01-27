@@ -1,11 +1,11 @@
 from rest_framework_gis import serializers
-from apps.complaints.models import Complaint
+from apps.layers.models import Layer
 
 
-class ComplaintSerializer(serializers.GeoFeatureModelSerializer):
+class LayerSerializer(serializers.GeoFeatureModelSerializer):
     class Meta:
-        model = Complaint
-        geo_field = 'point'
+        model = Layer
+        geo_field = 'area'
         fields = [
             'id',
             'title',

@@ -1,12 +1,12 @@
 from django.contrib.gis import admin
 from .models import (
     Profile,
-    Complaint
+    Layer
 )
 
 
-class ComplaintAdmin(admin.GeoModelAdmin):
-    model = Complaint
+class LayerAdmin(admin.GeoModelAdmin):
+    model = Layer
     list_display = [
         'profile',
         'title',
@@ -43,5 +43,5 @@ class ProfileAdmin(admin.ModelAdmin):
     ]
 
 
-admin.site.register(Complaint, ComplaintAdmin)
+admin.site.register(Layer, LayerAdmin)
 admin.site.register(Profile, ProfileAdmin)

@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_gis',
 
-    'apps.complaints'
+    'apps.layers'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -147,7 +147,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        'apps.complaints.api.renderers.StaffBrowsableAPIRenderer'
+        'apps.layers.api.renderers.StaffBrowsableAPIRenderer'
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',

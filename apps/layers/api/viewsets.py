@@ -4,12 +4,12 @@ from django_filters import (
     CharFilter,
     OrderingFilter
 )
-from apps.complaints.models import Complaint
-from .serializers import ComplaintSerializer
+from apps.layers.models import Layer
+from .serializers import LayerSerializer
 from .pagination import LimitOffsetPagination
 
 
-class ComplaintFilter(FilterSet):
+class LayerFilter(FilterSet):
     title = CharFilter(lookup_expr='icontains')
     ordering = OrderingFilter(
         fields=(
@@ -20,7 +20,7 @@ class ComplaintFilter(FilterSet):
     )
 
     class Meta:
-        model = Complaint
+        model = Layer
         fields = [
             'title',
             'created',
@@ -29,8 +29,8 @@ class ComplaintFilter(FilterSet):
         ]
 
 
-class ComplaintViewSet(ReadOnlyModelViewSet):
-    serializer_class = ComplaintSerializer
-    queryset = Complaint.objects.all()
-    filter_class = ComplaintFilter
+class LayerViewSet(ReadOnlyModelViewSet):
+    serializer_class = LayerSerializer
+    queryset = Layer.objects.all()
+    filter_class = LayerFilter
     pagination_class = LimitOffsetPagination
