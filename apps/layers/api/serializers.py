@@ -1,16 +1,17 @@
 from rest_framework_gis import serializers
-from apps.layers.models import Layer
+from apps.layers.models import TelegramPhoto
 
 
 class LayerSerializer(serializers.GeoFeatureModelSerializer):
     class Meta:
-        model = Layer
-        geo_field = 'area'
+        model = TelegramPhoto
+        geo_field = 'point'
         fields = [
             'id',
-            'title',
-            'description',
-            'profile',
+            'telegram_user',
+            'photo',
+            'caption',
+            'telegram_file_id',
             'created',
             'updated',
         ]

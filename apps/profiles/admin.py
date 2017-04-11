@@ -1,22 +1,22 @@
 from django.contrib.gis import admin
 from .models import (
-    Profile,
+    TelegramUser,
 )
 
 
-class ProfileAdmin(admin.ModelAdmin):
-    model = Profile
+class TelegramUserAdmin(admin.ModelAdmin):
+    model = TelegramUser
     list_display = [
-        'user',
+        'id',
+        'tid',
+        'username',
+        'first_name',
     ]
     search_fields = [
-        'user__first_name',
-        'user__last_name',
-        'user__email'
-    ]
-    raw_id_fields = [
-        'user'
+        'tid',
+        'username',
+        'first_name',
     ]
 
 
-admin.site.register(Profile, ProfileAdmin)
+admin.site.register(TelegramUser, TelegramUserAdmin)

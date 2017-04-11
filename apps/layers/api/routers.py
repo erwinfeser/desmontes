@@ -1,10 +1,10 @@
 from rest_framework.routers import SimpleRouter
 from .viewsets import (
-    LayerViewSet
+    TelegramPhotoViewSet
 )
 
 router = SimpleRouter(trailing_slash=False)
 
-router.register('layers', LayerViewSet)
+router.register('telegram-photos', TelegramPhotoViewSet)
 
 urlpatterns = router.urls

@@ -1,14 +1,15 @@
 from django.contrib.gis import admin
 from .models import (
-    Layer
+    TelegramPhoto
 )
 
 
-class LayerAdmin(admin.GeoModelAdmin):
-    model = Layer
+class TelegramPhotoAdmin(admin.GeoModelAdmin):
+    model = TelegramPhoto
     list_display = [
-        'profile',
-        'title',
+        'id',
+        'telegram_user',
+        'photo',
         'created',
         'updated'
     ]
@@ -16,15 +17,9 @@ class LayerAdmin(admin.GeoModelAdmin):
         'created',
         'updated'
     ]
-    search_fields = [
-        'title',
-        'profile__user__first_name',
-        'profile__user__last_name',
-        'profile__user__email'
-    ]
     raw_id_fields = [
-        'profile'
+        'telegram_user'
     ]
 
 
-admin.site.register(Layer, LayerAdmin)
+admin.site.register(TelegramPhoto, TelegramPhotoAdmin)

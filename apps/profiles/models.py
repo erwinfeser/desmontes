@@ -1,9 +1,7 @@
 from django.db import models
-from django.conf import settings
 
 
-class Profile(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='profile')
-
-    def __str__(self):
-        return self.user.email
+class TelegramUser(models.Model):
+    tid = models.IntegerField(help_text='Telegram ID')
+    username = models.CharField(max_length=255, null=True, blank=True)
+    first_name = models.CharField(max_length=255, null=True, blank=True)

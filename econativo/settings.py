@@ -157,3 +157,5 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
+
+TELEMAPBOT_TOKEN = os.environ.get('TELEMAPBOT_TOKEN')
