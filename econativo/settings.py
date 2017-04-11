@@ -158,7 +158,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
-TELEMAPBOT_TOKEN = os.environ['TELEMAPBOT_TOKEN']
-TELEMAP_BOT = telepot.Bot(TELEMAPBOT_TOKEN)
-TELEMAP_BOT.getMe()
-TELEGRAM_FILE_ROOT_URL = 'https://api.telegram.org/file/bot%s/' % TELEMAPBOT_TOKEN
+FOTOBOSQUE_BOT_TOKEN = os.environ['FOTOBOSQUE_BOT_TOKEN']
+FOTOBOSQUE_BOT = telepot.Bot(FOTOBOSQUE_BOT_TOKEN)
+FOTOBOSQUE_BOT.getMe()
+TELEGRAM_FILE_ROOT_URL = 'https://api.telegram.org/file/bot%s/' % FOTOBOSQUE_BOT_TOKEN
