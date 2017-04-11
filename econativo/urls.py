@@ -20,7 +20,6 @@ from apps.layers.api import routers
 
 urlpatterns = [
     url(r'^api/v1/', include(routers, 'v1')),
-    url(r'^raster/', include('raster.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^$', RedirectView.as_view(pattern_name='admin:index', permanent=True)),
 ]
