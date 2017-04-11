@@ -6,9 +6,13 @@ from .models import (
 
 class TelegramPhotoAdmin(admin.GeoModelAdmin):
     model = TelegramPhoto
+    list_select_related = [
+        'telegram_user'
+    ]
     list_display = [
         'id',
         'telegram_user',
+        'file_id',
         'photo',
         'created',
         'updated'
@@ -17,8 +21,17 @@ class TelegramPhotoAdmin(admin.GeoModelAdmin):
         'created',
         'updated'
     ]
+    readonly_fields = [
+        'photo_hash'
+    ]
     raw_id_fields = [
         'telegram_user'
+    ]
+    search_fields = [
+        'telegram_user__tid',
+        'telegram_user__first_name',
+        'telegram_user__username',
+        'file_id'
     ]
 
 

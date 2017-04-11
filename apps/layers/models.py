@@ -12,6 +12,8 @@ class AbstractCreatedUpdated(models.Model):
 class TelegramPhoto(AbstractCreatedUpdated):
     telegram_user = models.ForeignKey('profiles.TelegramUser', related_name='telegram_photos')
     photo = models.ImageField(upload_to='telegram_photos/%Y/%m/%d')
+    photo_hash = models.CharField(editable=False, max_length=255, unique=True)
     point = models.PointField()
     caption = models.TextField(null=True, blank=True)
-    telegram_file_id = models.CharField(max_length=255)
+    file_id = models.CharField(max_length=255)
+    message_id = models.CharField(max_length=255)

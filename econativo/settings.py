@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 import dj_database_url
+import telepot
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -157,4 +158,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
-TELEMAPBOT_TOKEN = os.environ.get('TELEMAPBOT_TOKEN')
+TELEMAPBOT_TOKEN = os.environ['TELEMAPBOT_TOKEN']
+TELEMAP_BOT = telepot.Bot(TELEMAPBOT_TOKEN)
+TELEMAP_BOT.getMe()
+TELEGRAM_FILE_ROOT_URL = 'https://api.telegram.org/file/bot%s/' % TELEMAPBOT_TOKEN

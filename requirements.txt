@@ -7,3 +7,4 @@ djangorestframework==3.5.3
 django-filter==1.0.1
 djangorestframework-gis==0.11
 telepot==10.5
+requests==2.13.0
