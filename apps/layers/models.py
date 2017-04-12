@@ -16,4 +16,5 @@ class TelegramPhoto(AbstractCreatedUpdated):
     point = models.PointField()
     caption = models.TextField(null=True, blank=True)
     file_id = models.CharField(max_length=255, unique=True)
-    message_id = models.CharField(max_length=255, unique=True)
+    message_id = models.IntegerField(unique=True)
+    update_id = models.IntegerField(unique=True)

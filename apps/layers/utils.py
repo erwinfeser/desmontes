@@ -14,6 +14,15 @@ from apps.profiles.models import TelegramUser
 fotobosque_bot = settings.FOTOBOSQUE_BOT
 get_float = lambda x: float(x[0]) / float(x[1])
 
+SUCCESS_MESSAGE = '''
+Gracias por tu aporte. La foto fue procesada
+Nombre de archivo: %s
+Ubicación: %s
+Comentario de foto: %s
+'''
+
+LOCATION_LINK = 'https://www.openstreetmap.org/?mlat=%s&mlon=%s#map=9/%s/%s'
+
 
 def convert_to_degrees(value):
     d = get_float(value[0])
@@ -38,13 +47,13 @@ def get_lat_lon(info):
 
 def create_telegram_photo_from_message(message):
     # TODO: Very ugly code, it is a draft that needs to be improved, even it should use aio
-    message = message['message']
+    update_id = message['update_id']
+    message = message['message']  # !!!
     message_from = message['from']
     caption = message.get('caption')
     document = message.get('document')
     message_id = message['message_id']
     chat_id = message['chat']['id']
-
     if document:
         file_size = document['file_size'] * 10 ** -6
         if file_size < 20.0:
@@ -62,11 +71,13 @@ def create_telegram_photo_from_message(message):
                             tid=message_from['id']
                         )
                         if created:
-                            telegram_user.first_name = message_from['first_name']
-                            telegram_user.username = message_from['username']
+                            telegram_user.first_name = message_from.get('first_name')
+                            telegram_user.last_name = message_from.get('last_name')
+                            telegram_user.username = message_from.get('username')
                             telegram_user.save()
-                        return TelegramPhoto.objects.create(
+                        photo = TelegramPhoto.objects.create(
                             message_id=message_id,
+                            update_id=update_id,
                             caption=caption,
                             file_id=file_id,
                             telegram_user=TelegramUser.objects.get_or_create(
@@ -79,6 +90,23 @@ def create_telegram_photo_from_message(message):
                             ),
                             photo_hash=md5
                         )
+                        location = LOCATION_LINK % (
+                            latitude,
+                            longitude,
+                            latitude,
+                            longitude
+                        )
+                        fotobosque_bot.sendMessage(
+                            chat_id,
+                            SUCCESS_MESSAGE % (
+                                file_name,
+                                location,
+                                caption or ''
+                            ),
+                            disable_web_page_preview=True,
+                            reply_to_message_id=message_id
+                        )
+                        return photo
                     except IntegrityError:
                         fotobosque_bot.sendMessage(
                             chat_id,
@@ -119,5 +147,10 @@ def create_telegram_photo_from_message(message):
 
 
 def create_telegram_photos(telegram_update_id=None):
+    if telegram_update_id is None:
+        latest_photo = TelegramPhoto.objects.latest('update_id')
+        telegram_update_id = latest_photo.update_id
     for message in fotobosque_bot.getUpdates(offset=telegram_update_id):
+        print(message)
+        print('-------')
         create_telegram_photo_from_message(message)
