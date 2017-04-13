@@ -9,3 +9,4 @@ djangorestframework-gis==0.11
 telepot==10.5
 requests==2.13.0
 Pillow==4.1.0
+celery==4.0.2
