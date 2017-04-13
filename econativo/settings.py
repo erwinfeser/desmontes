@@ -181,3 +181,18 @@ CELERY_ENABLE_REMOTE_CONTROL = False
 CELERYD_PREFETCH_MULTIPLIER = 30
 BROKER_POOL_LIMIT = 1
 BROKER_URL = os.environ.get('CLOUDAMQP_URL')
+
+# STORAGE
+DEFAULT_FILE_STORAGE = 'econativo.settings.s3storage.MediaRootS3BotoStorage'
+THUMBNAIL_DEFAULT_STORAGE = 'econativo.settings.s3storage.MediaRootS3BotoStorage'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_QUERYSTRING_AUTH = False
+AWS_HEADERS = {
+    "Cache-Control": "public, max-age=86400",
+}
+AWS_S3_FILE_OVERWRITE = False
+AWS_REDUCED_REDUNDANCY = False
+AWS_IS_GZIPPED = False
+AWS_STORAGE_BUCKET_NAME = 'econativo'
+MEDIA_URL = 'https://s3.amazonaws.com/econativo/media/'

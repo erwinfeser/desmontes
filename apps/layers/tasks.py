@@ -1,6 +1,5 @@
 import hashlib
-import PIL.Image
-import PIL.ExifTags
+from PIL import Image
 import requests
 import io
 from django.core.files.base import ContentFile
@@ -10,6 +9,8 @@ from django.conf import settings
 from django.contrib.gis.geos import Point
 from apps.layers.models import TelegramPhoto
 from apps.profiles.models import TelegramUser
+from celery import group
+from econativo.celery import app
 
 fotobosque_bot = settings.FOTOBOSQUE_BOT
 get_float = lambda x: float(x[0]) / float(x[1])
@@ -45,6 +46,7 @@ def get_lat_lon(info):
     return lat, lon
 
 
+@app.task
 def create_telegram_photo_from_message(message):
     # TODO: Very ugly code, it is a draft that needs to be improved, even it should use aio
     update_id = message['update_id']
@@ -62,7 +64,7 @@ def create_telegram_photo_from_message(message):
                 file_name = document['file_name']
                 url = settings.TELEGRAM_FILE_ROOT_URL + fotobosque_bot.getFile(file_id)['file_path']
                 downloaded = requests.get(url)
-                exif = PIL.Image.open(io.BytesIO(downloaded.content))._getexif()
+                exif = Image.open(io.BytesIO(downloaded.content))._getexif()
                 if exif:
                     try:
                         latitude, longitude = get_lat_lon(exif)
@@ -146,11 +148,15 @@ def create_telegram_photo_from_message(message):
             )
 
 
+@app.task
 def create_telegram_photos(telegram_update_id=None):
     if telegram_update_id is None:
         latest_photo = TelegramPhoto.objects.latest('update_id')
         telegram_update_id = latest_photo.update_id
+    tasks_group = []
     for message in fotobosque_bot.getUpdates(offset=telegram_update_id):
-        print(message)
-        print('-------')
-        create_telegram_photo_from_message(message)
+        tasks_group.append(create_telegram_photo_from_message.s(message))
+    if len(tasks_group) > 1:
+        group(*tasks_group)()
+    else:
+        tasks_group[0]()
