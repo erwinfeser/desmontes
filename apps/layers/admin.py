@@ -6,6 +6,7 @@ from .models import (
 
 class TelegramPhotoAdmin(admin.GeoModelAdmin):
     model = TelegramPhoto
+    openlayers_url = 'https://econativo.herokuapp.com/static/js/OpenLayers.js'
     list_select_related = [
         'telegram_user'
     ]
