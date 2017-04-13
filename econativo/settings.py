@@ -26,9 +26,6 @@ SECRET_KEY = "j#n7aeo&y-3c$jees^o3)h!22acm4&(xz57)w3_gc$(2wj_nbf"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == 'True'
 
-SECURE_SSL_REDIRECT = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -128,11 +125,12 @@ db_from_env = dj_database_url.config(
 )
 DATABASES['default'].update(db_from_env)
 
+SECURE_SSL_REDIRECT = True
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['econativo.herokuapp.com']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
