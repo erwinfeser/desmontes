@@ -162,5 +162,5 @@ def create_telegram_photos(telegram_update_id=None):
         tasks_group.append(create_telegram_photo_from_message.s(message))
     if len(tasks_group) > 1:
         group(*tasks_group)()
-    else:
+    elif tasks_group:
         tasks_group[0]()
