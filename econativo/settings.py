@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 import dj_database_url
 import telepot
+from celery.schedules import crontab
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -194,3 +195,10 @@ AWS_REDUCED_REDUNDANCY = False
 AWS_IS_GZIPPED = False
 AWS_STORAGE_BUCKET_NAME = 'econativo'
 MEDIA_URL = 'https://s3.amazonaws.com/econativo/media/'
+
+CELERYBEAT_SCHEDULE = {
+    'get-photos-every-minute': {
+        'task': 'apps.layers.tasks.create_telegram_photos',
+        'schedule': crontab(),
+    },
+}

@@ -7,8 +7,6 @@ from django.db import IntegrityError
 from django.core.files import File
 from django.conf import settings
 from django.contrib.gis.geos import Point
-from apps.layers.models import TelegramPhoto
-from apps.profiles.models import TelegramUser
 from celery import group
 from econativo.celery import app
 
@@ -59,6 +57,7 @@ def create_telegram_photo_from_message(message):
     if document:
         file_size = document['file_size'] * 10 ** -6
         if file_size < 20.0:
+            from apps.layers.models import TelegramPhoto
             file_id = document['file_id']
             if not TelegramPhoto.objects.filter(file_id=file_id).exists():
                 file_name = document['file_name']
@@ -67,6 +66,7 @@ def create_telegram_photo_from_message(message):
                 exif = Image.open(io.BytesIO(downloaded.content))._getexif()
                 if exif:
                     try:
+                        from apps.profiles.models import TelegramUser
                         latitude, longitude = get_lat_lon(exif)
                         md5 = hashlib.md5(downloaded.content).hexdigest()
                         telegram_user, created = TelegramUser.objects.get_or_create(
@@ -151,6 +151,7 @@ def create_telegram_photo_from_message(message):
 @app.task
 def create_telegram_photos(telegram_update_id=None):
     if telegram_update_id is None:
+        from apps.layers.models import TelegramPhoto
         latest_photo = TelegramPhoto.objects.latest('update_id')
         telegram_update_id = latest_photo.update_id
     tasks_group = []
