@@ -159,7 +159,6 @@ def create_telegram_photos(telegram_update_id=None):
             return
     tasks_group = []
     for message in fotobosque_bot.getUpdates(offset=telegram_update_id):
-        print(message)
         tasks_group.append(create_telegram_photo_from_message.s(message))
     if len(tasks_group) > 1:
         group(*tasks_group)()

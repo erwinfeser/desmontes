@@ -182,8 +182,8 @@ BROKER_POOL_LIMIT = 1
 BROKER_URL = os.environ.get('CLOUDAMQP_URL')
 
 # STORAGE
-DEFAULT_FILE_STORAGE = 'econativo.settings.s3storage.MediaRootS3BotoStorage'
-THUMBNAIL_DEFAULT_STORAGE = 'econativo.settings.s3storage.MediaRootS3BotoStorage'
+DEFAULT_FILE_STORAGE = 'econativo.s3storage.MediaRootS3BotoStorage'
+THUMBNAIL_DEFAULT_STORAGE = 'econativo.s3storage.MediaRootS3BotoStorage'
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_QUERYSTRING_AUTH = False
