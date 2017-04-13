@@ -152,8 +152,11 @@ def create_telegram_photo_from_message(message):
 def create_telegram_photos(telegram_update_id=None):
     if telegram_update_id is None:
         from apps.layers.models import TelegramPhoto
-        latest_photo = TelegramPhoto.objects.latest('update_id')
-        telegram_update_id = latest_photo.update_id
+        try:
+            latest_photo = TelegramPhoto.objects.latest('update_id')
+            telegram_update_id = latest_photo.update_id
+        except TelegramPhoto.DoesNotExist:
+            return
     tasks_group = []
     for message in fotobosque_bot.getUpdates(offset=telegram_update_id):
         tasks_group.append(create_telegram_photo_from_message.s(message))
