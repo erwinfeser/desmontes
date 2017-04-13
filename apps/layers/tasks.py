@@ -154,7 +154,7 @@ def create_telegram_photos(telegram_update_id=None):
         from apps.layers.models import TelegramPhoto
         try:
             latest_photo = TelegramPhoto.objects.latest('update_id')
-            telegram_update_id = latest_photo.update_id
+            telegram_update_id = latest_photo.update_id + 1
         except TelegramPhoto.DoesNotExist:
             pass
     tasks_group = []
