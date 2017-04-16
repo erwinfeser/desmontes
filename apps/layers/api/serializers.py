@@ -5,7 +5,7 @@ from apps.layers.models import TelegramPhoto
 class TelegramPhotoSerializer(serializers.GeoFeatureModelSerializer):
     class Meta:
         model = TelegramPhoto
-        geo_field = 'point'
+        geo_field = 'location'
         fields = [
             'id',
             'telegram_user',

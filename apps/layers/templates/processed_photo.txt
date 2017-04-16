@@ -1,0 +1,4 @@
+Gracias por tu aporte. La foto fue procesada
+URL: {{photo_url}}
+Ubicación: {{location_url}}
+Comentario de foto: {{caption}}

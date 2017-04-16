@@ -10,7 +10,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-import dj_database_url
 import telepot
 from celery.schedules import crontab
 
@@ -111,27 +110,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.9/topics/i18n/
+# https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
-# Update database configuration with $DATABASE_URL.
-db_from_env = dj_database_url.config(
-    engine='django.contrib.gis.db.backends.postgis',
-    conn_max_age=500
-)
-DATABASES['default'].update(db_from_env)
-
-SECURE_SSL_REDIRECT = True
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# Allow all host headers
-ALLOWED_HOSTS = ['econativo.herokuapp.com']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
@@ -165,7 +150,6 @@ FOTOBOSQUE_BOT = telepot.Bot(FOTOBOSQUE_BOT_TOKEN)
 FOTOBOSQUE_BOT.getMe()
 TELEGRAM_FILE_ROOT_URL = 'https://api.telegram.org/file/bot%s/' % FOTOBOSQUE_BOT_TOKEN
 
-
 # CELERY
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_DEFAULT_QUEUE = 'tasks'
@@ -181,24 +165,13 @@ CELERYD_PREFETCH_MULTIPLIER = 30
 BROKER_POOL_LIMIT = 1
 BROKER_URL = os.environ.get('CLOUDAMQP_URL')
 
-# STORAGE
-DEFAULT_FILE_STORAGE = 'econativo.s3storage.MediaRootS3BotoStorage'
-THUMBNAIL_DEFAULT_STORAGE = 'econativo.s3storage.MediaRootS3BotoStorage'
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_QUERYSTRING_AUTH = False
-AWS_HEADERS = {
-    "Cache-Control": "public, max-age=86400",
-}
-AWS_S3_FILE_OVERWRITE = False
-AWS_REDUCED_REDUNDANCY = False
-AWS_IS_GZIPPED = False
-AWS_STORAGE_BUCKET_NAME = 'econativo'
-MEDIA_URL = 'https://s3.amazonaws.com/econativo/media/'
-
 CELERYBEAT_SCHEDULE = {
-    'get-photos-every-minute': {
+    'get-photos-every-30-seconds': {
         'task': 'apps.layers.tasks.create_telegram_photos',
-        'schedule': crontab(),
+        'schedule': 30.0
     },
+    'get-locations-every-10-seconds': {
+        'task': 'apps.profiles.tasks.update_locations',
+        'schedule': 10.0
+    }
 }

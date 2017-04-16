@@ -13,7 +13,7 @@ class TelegramPhoto(AbstractCreatedUpdated):
     telegram_user = models.ForeignKey('profiles.TelegramUser', related_name='telegram_photos')
     photo = models.ImageField(upload_to='telegram_photos/%Y/%m/%d')
     photo_hash = models.CharField(editable=False, max_length=255, unique=True)
-    point = models.PointField()
+    location = models.PointField()
     caption = models.TextField(null=True, blank=True)
     file_id = models.CharField(max_length=255, unique=True)
     message_id = models.IntegerField(unique=True)
