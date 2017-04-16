@@ -17,10 +17,13 @@ def update_location_from_message(message):
     message_id = message['message_id']
     chat_id = message['chat']['id']
     location = message['location']
-    telegram_user, created = TelegramUser.objects.get_or_create(
-        tid=message_from['id']
-    )
-    if created is False and telegram_user.update_id and telegram_user.update_id < update_id:
+    telegram_user = TelegramUser.objects.filter(tid=message_from['id']).first()
+    if telegram_user is None:
+        telegram_user = TelegramUser.objects.create(
+            tid=message_from['id'],
+            update_id = update_id
+        )
+    if telegram_user.update_id and telegram_user.update_id < update_id:
         # Message is old
         return
     if not telegram_user.first_name:
